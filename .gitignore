@@ -8,5 +8,12 @@
 # architecture
 !*.archimate
 
+# rust
+!*.rs
+!Cargo.toml
+!Cargo.lock
+
+target/
+
 # ignore backups
 *.bak
