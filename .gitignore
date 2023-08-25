@@ -1,0 +1,12 @@
+*
+
+!/**
+
+# git
+!.gitignore
+
+# architecture
+!*.archimate
+
+# ignore backups
+*.bak
