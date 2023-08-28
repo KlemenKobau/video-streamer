@@ -18,4 +18,4 @@ envconfig = "0.10.0"
 getset = "0.1.2"
 
 # error mapping
-anyhow = "1.0"
+thiserror = "1.0"
