@@ -1496,6 +1496,7 @@ version = "0.1.0"
 dependencies = [
  "poem",
  "poem-openapi",
+ "serde",
  "tokio",
 ]
 
