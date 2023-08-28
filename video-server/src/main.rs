@@ -3,6 +3,7 @@ use poem::{listener::TcpListener, Result, Route};
 use poem_openapi::{payload::Json, OpenApi, OpenApiService};
 
 mod config;
+mod video;
 
 struct Api;
 
@@ -25,6 +26,8 @@ async fn main() -> Result<(), std::io::Error> {
     ));
     let ui = api_service.swagger_ui();
     let app = Route::new().nest("/api", api_service).nest("/", ui);
+
+    // video::read_videos(&config);
 
     poem::Server::new(TcpListener::bind(format!(
         "{}:{}",
