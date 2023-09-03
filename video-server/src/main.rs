@@ -1,7 +1,7 @@
-use actix_web::{App, HttpServer};
+use actix_web::{web::Data, App, HttpServer};
 use api::videos;
 use envconfig::Envconfig;
-use errors::InternalError;
+use errors::AppError;
 
 mod api;
 mod config;
@@ -10,11 +10,15 @@ mod errors;
 mod video;
 
 #[tokio::main]
-async fn main() -> Result<(), InternalError> {
+async fn main() -> Result<(), AppError> {
     let config = config::Config::init_from_env().unwrap();
 
-    HttpServer::new(|| App::new().service(videos))
-        .bind((config.host().to_owned(), config.port().parse()?))?
+    let host: String = config.host().clone();
+    let port = config.port().clone();
+    let config = Data::new(config);
+
+    HttpServer::new(move || App::new().app_data(config.clone()).service(videos))
+        .bind((host, port.parse::<u16>()?))?
         .run()
         .await?;
 

@@ -4,7 +4,7 @@ use actix_web::{http::StatusCode, ResponseError};
 use thiserror::Error;
 
 #[derive(Debug, Error)]
-pub enum InternalError {
+pub enum AppError {
     #[error("File system error.")]
     IOError(#[from] io::Error),
 
@@ -15,7 +15,7 @@ pub enum InternalError {
     ParseIntError(#[from] ParseIntError),
 }
 
-impl ResponseError for InternalError {
+impl ResponseError for AppError {
     fn status_code(&self) -> StatusCode {
         StatusCode::INTERNAL_SERVER_ERROR
     }

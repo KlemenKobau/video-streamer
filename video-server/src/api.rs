@@ -4,10 +4,10 @@ use actix_web::{
     Responder,
 };
 
-use crate::{config::Config, errors::InternalError, video::read_videos};
+use crate::{config::Config, errors::AppError, video::read_videos};
 
 #[get("/videos")]
-pub async fn videos(data: Data<Config>) -> Result<impl Responder, InternalError> {
+pub async fn videos(data: Data<Config>) -> Result<impl Responder, AppError> {
     let videos = read_videos(&data).await?;
 
     Ok(Json(videos))
