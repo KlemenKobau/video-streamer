@@ -1,9 +1,8 @@
-use anyhow::Result;
 use tokio::fs;
 
-use crate::config::Config;
+use crate::{config::Config, errors::InternalError};
 
-pub async fn read_videos(config: &Config) -> Result<Vec<String>> {
+pub async fn read_videos(config: &Config) -> Result<Vec<String>, InternalError> {
     let video_folder_path = config.video_config().video_folder_path();
     let video_file_name = config.video_config().videos_file();
     let file_path = format!("{}/{}", video_folder_path, video_file_name);

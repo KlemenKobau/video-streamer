@@ -1,18 +1,14 @@
-use poem::web::Data;
-use poem_openapi::{payload::Json, OpenApi};
+use actix_web::{
+    get,
+    web::{Data, Json},
+    Responder,
+};
 
-use crate::{config::Config, dto::video_list::VideoList, video::read_videos};
+use crate::{config::Config, errors::InternalError, video::read_videos};
 
-pub struct Api;
+#[get("/videos")]
+pub async fn videos(data: Data<Config>) -> Result<impl Responder, InternalError> {
+    let videos = read_videos(&data).await?;
 
-#[OpenApi]
-impl Api {
-    #[oai(path = "/videos", method = "get")]
-    async fn index(&self, conf_data: Data<&Config>) -> Result<Json<VideoList>> {
-        let video_list = read_videos(conf_data.0).await?;
-
-        Ok(Json(VideoList {
-            video_list: video_list,
-        }))
-    }
+    Ok(Json(videos))
 }
