@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "video-encoder",
+    "video-server"
+]
