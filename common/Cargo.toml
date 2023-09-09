@@ -1,0 +1,11 @@
+[package]
+name = "common"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# environment
+envconfig = "0.10.0"
+
+# getters and setters
+getset = "0.1.2"

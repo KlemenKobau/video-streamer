@@ -11,11 +11,7 @@ tokio = { version = "1.32", features = ["full"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
-# environment
-envconfig = "0.10.0"
-
-# getters and setters
-getset = "0.1.2"
-
 # error mapping
 thiserror = "1.0"
+
+common = {path = "../common"}

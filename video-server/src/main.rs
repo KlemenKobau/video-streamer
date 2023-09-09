@@ -1,17 +1,16 @@
 use actix_web::{web::Data, App, HttpServer};
 use api::videos;
-use envconfig::Envconfig;
+use common::{config::Config, envconfig::Envconfig};
 use errors::AppError;
 
 mod api;
-mod config;
 mod dto;
 mod errors;
 mod video;
 
 #[tokio::main]
 async fn main() -> Result<(), AppError> {
-    let config = config::Config::init_from_env().unwrap();
+    let config = Config::init_from_env().unwrap();
 
     let host: String = config.host().clone();
     let port = config.port().clone();

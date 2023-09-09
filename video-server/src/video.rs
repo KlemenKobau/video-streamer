@@ -1,7 +1,7 @@
+use common::config::Config;
 use tokio::fs;
 
 use crate::{
-    config::Config,
     dto::video::{Video, VideoSegment},
     errors::AppError,
 };
