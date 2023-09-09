@@ -5,7 +5,7 @@ use thiserror::Error;
 
 #[derive(Debug, Error)]
 pub enum AppError {
-    #[error("File system error.")]
+    #[error("IO error.")]
     IO(#[from] io::Error),
 
     #[error("File system error.")]
