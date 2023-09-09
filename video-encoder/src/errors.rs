@@ -1,6 +1,7 @@
 use std::{io, num::ParseIntError};
 
 use actix_web::{http::StatusCode, ResponseError};
+use base64::DecodeError;
 use thiserror::Error;
 
 #[derive(Debug, Error)]
@@ -10,6 +11,9 @@ pub enum AppError {
 
     #[error("Cannot parse int.")]
     ParseInt(#[from] ParseIntError),
+
+    #[error("Decode error.")]
+    Decode(#[from] DecodeError),
 }
 
 impl ResponseError for AppError {

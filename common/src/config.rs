@@ -14,6 +14,10 @@ pub struct Config {
     #[getset(get = "pub")]
     #[envconfig(from = "video", nested = true)]
     video_config: VideoConfig,
+
+    #[getset(get = "pub")]
+    #[envconfig(from = "encode", nested = true)]
+    encode_config: VideoEncodeConfig,
 }
 
 #[derive(Debug, Envconfig, Getters)]
@@ -25,4 +29,11 @@ pub struct VideoConfig {
     #[getset(get = "pub")]
     #[envconfig(from = "VIDEOS_FILE", default = "videos.txt")]
     videos_file: String,
+}
+
+#[derive(Debug, Envconfig, Getters)]
+pub struct VideoEncodeConfig {
+    #[getset(get = "pub")]
+    #[envconfig(from = "TEMP_VIDEO_FOLDER", default = "videos")]
+    temp_video_folder: String,
 }
