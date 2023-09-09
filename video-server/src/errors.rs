@@ -6,13 +6,13 @@ use thiserror::Error;
 #[derive(Debug, Error)]
 pub enum AppError {
     #[error("File system error.")]
-    IOError(#[from] io::Error),
+    IO(#[from] io::Error),
 
     #[error("File system error.")]
-    ConfigError(#[from] FromUtf8Error),
+    Config(#[from] FromUtf8Error),
 
     #[error("Cannot parse int.")]
-    ParseIntError(#[from] ParseIntError),
+    ParseInt(#[from] ParseIntError),
 }
 
 impl ResponseError for AppError {
