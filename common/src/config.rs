@@ -12,11 +12,11 @@ pub struct Config {
     port: String,
 
     #[getset(get = "pub")]
-    #[envconfig(from = "VIDEO", nested = true)]
+    #[envconfig(nested = true)]
     video_config: VideoConfig,
 
     #[getset(get = "pub")]
-    #[envconfig(from = "ENCODE", nested = true)]
+    #[envconfig(nested = true)]
     encode_config: VideoEncodeConfig,
 }
 

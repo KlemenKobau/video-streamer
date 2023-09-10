@@ -1,10 +1,11 @@
+use std::io::Write;
+
 use common::config::Config;
 use tokio::{
-    fs::{create_dir, File},
+    fs::{create_dir, File, OpenOptions},
     io::AsyncWriteExt,
     process::Command,
 };
-use tracing::info;
 use uuid::Uuid;
 
 use crate::errors::AppError;
@@ -20,6 +21,8 @@ pub async fn encode_video(config: &Config, video: &[u8]) -> Result<(), AppError>
     save_video_to_temp(video, &video_path).await?;
 
     video_ffmpeg(config, &video_uuid, &video_path).await?;
+
+    add_video_to_video_file(config, &video_uuid).await?;
 
     Ok(())
 }
@@ -58,6 +61,21 @@ async fn video_ffmpeg(
         .arg(&format!("{}/filename.m3u8", video_folder_path))
         .output()
         .await?;
+
+    Ok(())
+}
+
+async fn add_video_to_video_file(config: &Config, video_uuid: &Uuid) -> Result<(), AppError> {
+    let videos_folder = config.video_config().video_folder_path();
+    let videos_file = config.video_config().videos_file();
+    let file_path = format!("{}/{}", videos_folder, videos_file);
+
+    let mut file = OpenOptions::new().append(true).open(file_path).await?;
+
+    let mut vec: Vec<u8> = Vec::new();
+    writeln!(vec, "name;{}", video_uuid)?;
+
+    file.write_all(&vec).await?;
 
     Ok(())
 }

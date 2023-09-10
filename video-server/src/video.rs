@@ -15,6 +15,7 @@ pub async fn read_videos(config: &Config) -> Result<Vec<Video>, AppError> {
     let parsed = String::from_utf8(content)?;
     let videos: Vec<_> = parsed
         .split('\n')
+        .filter(|&x| !x.is_empty())
         .map(|x| {
             x.split_once(';')
                 .expect("The videos should be in the correct format.")
