@@ -3,7 +3,7 @@ use serde::Serialize;
 #[derive(Debug, Serialize)]
 pub struct Video {
     pub name: String,
-    pub uuid: String
+    pub uuid: String,
 }
 
 #[derive(Debug, Serialize)]
@@ -13,5 +13,5 @@ pub struct VideoList {
 
 #[derive(Debug, Serialize)]
 pub struct VideoSegment {
-    pub segment: String
+    pub segment: Vec<u8>,
 }

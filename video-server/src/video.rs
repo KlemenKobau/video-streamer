@@ -36,9 +36,7 @@ pub async fn read_segment(
 ) -> Result<VideoSegment, AppError> {
     let video_folder_path = config.video_config().video_folder_path();
     let file_path = format!("{}/{}/{}", video_folder_path, video_id, segment_number);
-
     let content = fs::read(file_path).await?;
-    let parsed = String::from_utf8(content)?;
 
-    Ok(VideoSegment { segment: parsed })
+    Ok(VideoSegment { segment: content })
 }
