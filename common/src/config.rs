@@ -12,11 +12,11 @@ pub struct Config {
     port: String,
 
     #[getset(get = "pub")]
-    #[envconfig(from = "video", nested = true)]
+    #[envconfig(from = "VIDEO", nested = true)]
     video_config: VideoConfig,
 
     #[getset(get = "pub")]
-    #[envconfig(from = "encode", nested = true)]
+    #[envconfig(from = "ENCODE", nested = true)]
     encode_config: VideoEncodeConfig,
 }
 
@@ -34,6 +34,6 @@ pub struct VideoConfig {
 #[derive(Debug, Envconfig, Getters)]
 pub struct VideoEncodeConfig {
     #[getset(get = "pub")]
-    #[envconfig(from = "TEMP_VIDEO_FOLDER", default = "videos")]
+    #[envconfig(from = "TEMP_VIDEO_FOLDER", default = "temp-videos")]
     temp_video_folder: String,
 }

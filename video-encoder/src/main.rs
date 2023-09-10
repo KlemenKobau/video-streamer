@@ -10,6 +10,8 @@ mod video;
 
 #[tokio::main]
 async fn main() -> Result<(), AppError> {
+    tracing_subscriber::fmt::init();
+
     let config = Config::init_from_env().unwrap();
 
     let host: String = config.host().clone();

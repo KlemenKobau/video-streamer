@@ -1,7 +1,6 @@
 use std::{io, num::ParseIntError};
 
-use actix_web::{http::StatusCode, ResponseError};
-use base64::DecodeError;
+use actix_web::{error::PayloadError, http::StatusCode, ResponseError};
 use thiserror::Error;
 
 #[derive(Debug, Error)]
@@ -12,12 +11,15 @@ pub enum AppError {
     #[error("Cannot parse int.")]
     ParseInt(#[from] ParseIntError),
 
-    #[error("Decode error.")]
-    Decode(#[from] DecodeError),
+    #[error("Payload error.")]
+    Payload(#[from] PayloadError),
 }
 
 impl ResponseError for AppError {
     fn status_code(&self) -> StatusCode {
-        StatusCode::INTERNAL_SERVER_ERROR
+        match self {
+            AppError::IO(_) | AppError::ParseInt(_) => StatusCode::INTERNAL_SERVER_ERROR,
+            AppError::Payload(_) => StatusCode::BAD_REQUEST,
+        }
     }
 }

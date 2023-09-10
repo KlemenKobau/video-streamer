@@ -1,19 +1,15 @@
-use base64::{engine::general_purpose, Engine};
 use common::config::Config;
 use tokio::{
     fs::{create_dir, File},
     io::AsyncWriteExt,
     process::Command,
 };
+use tracing::info;
 use uuid::Uuid;
 
-use crate::{dto::video::VideoEncodeRequest, errors::AppError};
+use crate::errors::AppError;
 
-pub async fn encode_video(
-    config: &Config,
-    video_encode_req: VideoEncodeRequest,
-) -> Result<(), AppError> {
-    let video_name = &video_encode_req.video_name;
+pub async fn encode_video(config: &Config, video: &[u8]) -> Result<(), AppError> {
     let video_uuid = Uuid::new_v4();
     let video_path = format!(
         "{}/{}",
@@ -21,26 +17,22 @@ pub async fn encode_video(
         video_uuid
     );
 
-    let temp_video_file = save_video_to_temp(&video_encode_req, &video_path).await?;
+    save_video_to_temp(video, &video_path).await?;
+
+    video_ffmpeg(config, &video_uuid, &video_path).await?;
 
     Ok(())
 }
 
-async fn save_video_to_temp(
-    video_encode_req: &VideoEncodeRequest,
-    video_file_path: &String,
-) -> Result<File, AppError> {
-    let decoded_video = general_purpose::STANDARD.decode(&video_encode_req.video)?;
-
+async fn save_video_to_temp(video: &[u8], video_file_path: &String) -> Result<File, AppError> {
     let mut file = File::create(video_file_path).await?;
-    file.write_all(&decoded_video).await?;
+    file.write_all(video).await?;
 
     Ok(file)
 }
 
 async fn video_ffmpeg(
     config: &Config,
-    video_name: &String,
     video_uuid: &Uuid,
     video_file_path: &String,
 ) -> Result<(), AppError> {
