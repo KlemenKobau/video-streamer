@@ -9,3 +9,7 @@ envconfig = "0.10.0"
 
 # getters and setters
 getset = "0.1.2"
+
+# json
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"

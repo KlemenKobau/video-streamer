@@ -3,11 +3,10 @@ use actix_web::{
     web::{Data, Json, Path},
     Responder,
 };
-use common::config::Config;
+use common::{config::Config, dto::video::VideoList};
 use tracing::info;
 
 use crate::{
-    dto::video::VideoList,
     errors::AppError,
     video::{read_segment, read_videos},
 };

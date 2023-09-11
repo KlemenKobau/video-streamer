@@ -1,10 +1,10 @@
-use common::config::Config;
+use common::{
+    config::Config,
+    dto::video::{Video, VideoSegment},
+};
 use tokio::fs;
 
-use crate::{
-    dto::video::{Video, VideoSegment},
-    errors::AppError,
-};
+use crate::errors::AppError;
 
 pub async fn read_videos(config: &Config) -> Result<Vec<Video>, AppError> {
     let video_folder_path = config.video_config().video_folder_path();

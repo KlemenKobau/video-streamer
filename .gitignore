@@ -20,6 +20,7 @@ target/
 
 # shell
 !run.sh
+!serve.sh
 
 # yaml
 !*.yml
