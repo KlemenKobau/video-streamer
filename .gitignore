@@ -20,3 +20,10 @@ target/
 
 # shell
 !run.sh
+
+# yaml
+!*.yml
+
+# frontend
+!*.scss
+!*.html
