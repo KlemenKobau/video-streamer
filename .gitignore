@@ -17,3 +17,6 @@ target/
 
 # ignore backups
 *.bak
+
+# shell
+!run.sh
