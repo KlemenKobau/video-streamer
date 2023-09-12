@@ -3,7 +3,7 @@ use actix_web::{
     web::{Data, Json, Path},
     Responder,
 };
-use common::{config::Config, dto::video::VideoList};
+use common::{config::Config, dto::video::VideoListDto};
 use tracing::info;
 
 use crate::{
@@ -14,7 +14,7 @@ use crate::{
 #[get("/videos")]
 pub async fn videos(data: Data<Config>) -> Result<impl Responder, AppError> {
     let videos = read_videos(&data).await?;
-    let videos = VideoList { video_list: videos };
+    let videos = VideoListDto { video_list: videos };
 
     Ok(Json(videos))
 }

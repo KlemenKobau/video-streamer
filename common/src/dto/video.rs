@@ -1,17 +1,17 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize)]
-pub struct Video {
+#[derive(Debug, Serialize, Deserialize)]
+pub struct VideoDto {
     pub name: String,
     pub uuid: String,
 }
 
-#[derive(Debug, Serialize)]
-pub struct VideoList {
-    pub video_list: Vec<Video>,
+#[derive(Debug, Serialize, Deserialize)]
+pub struct VideoListDto {
+    pub video_list: Vec<VideoDto>,
 }
 
-#[derive(Debug, Serialize)]
-pub struct VideoSegment {
+#[derive(Debug, Serialize, Deserialize)]
+pub struct VideoSegmentDto {
     pub segment: Vec<u8>,
 }
