@@ -1,1 +1,1 @@
-trunk serve --port=4200
+trunk serve --port=4200 --proxy-backend=http://localhost:8081/api
