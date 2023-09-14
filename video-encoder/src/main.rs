@@ -1,4 +1,8 @@
-use actix_web::{web::Data, App, HttpServer};
+use actix_web::{
+    middleware::Logger,
+    web::{scope, Data},
+    App, HttpServer,
+};
 use api::submit_video;
 use common::{config::Config, envconfig::Envconfig};
 use errors::AppError;
@@ -18,10 +22,15 @@ async fn main() -> Result<(), AppError> {
     let port = config.port().clone();
     let config = Data::new(config);
 
-    HttpServer::new(move || App::new().app_data(config.clone()).service(submit_video))
-        .bind((host, port.parse::<u16>()?))?
-        .run()
-        .await?;
+    HttpServer::new(move || {
+        App::new()
+            .wrap(Logger::default())
+            .app_data(config.clone())
+            .service(scope("/api").service(submit_video))
+    })
+    .bind((host, port.parse::<u16>()?))?
+    .run()
+    .await?;
 
     Ok(())
 }
