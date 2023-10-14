@@ -10,8 +10,3 @@ pub struct VideoDto {
 pub struct VideoListDto {
     pub video_list: Vec<VideoDto>,
 }
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct VideoSegmentDto {
-    pub segment: Vec<u8>,
-}

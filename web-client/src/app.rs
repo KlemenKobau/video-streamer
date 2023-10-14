@@ -88,8 +88,12 @@ struct VideoProps {
 
 #[function_component(Video)]
 fn video(video_props: &VideoProps) -> Html {
-    html! { <video id="hls-example"  class="video-js vjs-default-skin" width="400" height="300">
-       <source type="application/x-mpegURL" src="http://playertest.longtailvideo.com/adaptive/wowzaid3/playlist.m3u8"/>
-       </video>
+    let config = use_context::<Config>().unwrap();
+    let video_file_url = format!("{}/videos/{}", config.api_base_path, video_props.video_id);
+
+    html! {
+        <video-js id="hls-example" controls=true class="video-js vjs-default-skin" width="400" height="300" data-setup="'{}'">
+            <source type="application/x-mpegURL" src={video_file_url}/>
+        </video-js>
     }
 }

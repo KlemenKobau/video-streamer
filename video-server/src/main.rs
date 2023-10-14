@@ -3,7 +3,7 @@ use actix_web::{
     web::{scope, Data},
     App, HttpServer,
 };
-use api::{video_segment, videos};
+use api::{video_file, video_segment, videos};
 use common::{config::Config, envconfig::Envconfig};
 use errors::AppError;
 
@@ -26,7 +26,12 @@ async fn main() -> Result<(), AppError> {
         App::new()
             .wrap(Logger::default())
             .app_data(config.clone())
-            .service(scope("/api").service(videos).service(video_segment))
+            .service(
+                scope("/api")
+                    .service(videos)
+                    .service(video_file)
+                    .service(video_segment),
+            )
     })
     .bind((host, port.parse::<u16>()?))?
     .run()

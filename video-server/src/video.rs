@@ -1,7 +1,4 @@
-use common::{
-    config::Config,
-    dto::video::{VideoDto, VideoSegmentDto},
-};
+use common::{config::Config, dto::video::VideoDto};
 use tokio::fs;
 
 use crate::errors::AppError;
@@ -29,14 +26,22 @@ pub async fn read_videos(config: &Config) -> Result<Vec<VideoDto>, AppError> {
     Ok(videos)
 }
 
+pub async fn read_file(config: &Config, video_id: String) -> Result<String, AppError> {
+    let video_folder_path = config.video_config().video_folder_path();
+    let file_path = format!("{}/{}/{}", video_folder_path, video_id, "filename.m3u8");
+    let content = fs::read(file_path).await?;
+
+    Ok(String::from_utf8(content)?)
+}
+
 pub async fn read_segment(
     config: &Config,
     video_id: String,
     segment_number: String,
-) -> Result<VideoSegmentDto, AppError> {
+) -> Result<String, AppError> {
     let video_folder_path = config.video_config().video_folder_path();
     let file_path = format!("{}/{}/{}", video_folder_path, video_id, segment_number);
     let content = fs::read(file_path).await?;
 
-    Ok(VideoSegmentDto { segment: content })
+    Ok(String::from_utf8(content)?)
 }
