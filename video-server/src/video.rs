@@ -1,5 +1,6 @@
 use common::{config::Config, dto::video::VideoDto};
 use tokio::fs;
+use tracing::info;
 
 use crate::errors::AppError;
 
@@ -38,10 +39,11 @@ pub async fn read_segment(
     config: &Config,
     video_id: String,
     segment_number: String,
-) -> Result<String, AppError> {
+) -> Result<Vec<u8>, AppError> {
     let video_folder_path = config.video_config().video_folder_path();
     let file_path = format!("{}/{}/{}", video_folder_path, video_id, segment_number);
+
     let content = fs::read(file_path).await?;
 
-    Ok(String::from_utf8(content)?)
+    Ok(content)
 }

@@ -8,7 +8,7 @@ pub enum AppError {
     #[error("IO error.")]
     IO(#[from] io::Error),
 
-    #[error("File system error.")]
+    #[error("Utf8 error.")]
     Config(#[from] FromUtf8Error),
 
     #[error("Cannot parse int.")]

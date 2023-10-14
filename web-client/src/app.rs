@@ -89,7 +89,10 @@ struct VideoProps {
 #[function_component(Video)]
 fn video(video_props: &VideoProps) -> Html {
     let config = use_context::<Config>().unwrap();
-    let video_file_url = format!("{}/videos/{}", config.api_base_path, video_props.video_id);
+    let video_file_url = format!(
+        "{}/videos/{}/filename.m3u8",
+        config.api_base_path, video_props.video_id
+    );
 
     html! {
         <video-js id="hls-example" controls=true class="video-js vjs-default-skin" width="400" height="300" data-setup="'{}'">

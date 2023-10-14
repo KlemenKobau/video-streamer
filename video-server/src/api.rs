@@ -19,7 +19,7 @@ pub async fn videos(data: Data<Config>) -> Result<impl Responder, AppError> {
     Ok(Json(videos))
 }
 
-#[get("/videos/{video_id}")]
+#[get("/videos/{video_id}/filename.m3u8")]
 pub async fn video_file(
     data: Data<Config>,
     path: Path<String>,
